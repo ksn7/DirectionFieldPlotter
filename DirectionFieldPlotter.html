@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Direction Field Plotter</title>
+    <script src="https://sagecell.sagemath.org/static/jquery.min.js"></script>
+    <script src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
+    <script>
+$(function () {
+    // Make *any* div with class 'compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.compute',
+    						template:       sagecell.templates.minimal,
+                           evalButtonText: 'Launch the Interactive Applet Now'});
+});
+    </script>
+  </head>
+  <body style="width: 1000px;">
+
+  <h1>Direction Field Plotter</h1>
+
+<p>An Interactive Applet powered by Sage and MathJax.</p>
+<p>(By Kelsey Norman with HTML code from Prof. Gregory V. Bard)</p>
+
+<hr>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="jquery.jslatex.js"></script>
+
+<script>
+$(function () {
+    $(".latex").latex();
+});
+</script>
+
+<div class="latex">
+    \textrm{This demo plots a function and it's direction field. The original function is shown in red.}
+</div>
+
+<hr>
+
+<div class="compute">
+<script type="text/x-sage">
+
+var('y')
+
+@interact( layout=[ ['func'], ['x_min', 'x_max'], ['y_min', 'y_max'] ])
+def dir_field( func = input_box( default = 0.5*x^2, label = "f(x,y) = ", width = 20 ), 
+        x_min = input_box( default = -5, label = "x min", width = 5 ), 
+        x_max = input_box( default = 5, label = "x max", width = 5 ), 
+        y_min = input_box( default = -2, label = "y min", width = 5 ), 
+        y_max = input_box( default = 8, label = "y max", width = 5 ) ):
+    f = func
+    graph = plot( f, x_min, x_max, ymin= y_min, ymax = y_max, color = "red", thickness = 2 )
+    deriv = derivative(f, x)
+    graph += plot_slope_field( deriv, (x, x_min, x_max), (y, y_min, y_max) )
+    graph.show()
+
+</script>
+</div>
+
+<hr>
+Last modified on July 11th, 2017.
+</body>
+</html>
